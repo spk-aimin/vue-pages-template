@@ -7,6 +7,9 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const entries = utils.getEntries("./src/views/**/*.js")
 
+
+const buildConfig = process.env.NODE_ENV == "production"? "build": 'dev' //打包配置 dev为 "run dev"
+
 let chunks = Object.keys(entries),
     ExtractTextPlugin = require('extract-text-webpack-plugin');    
 
@@ -41,8 +44,7 @@ const webpackConfig = {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
       '@components': resolve('src/components'),
-      '@utils': resolve('src/utils'),
-      '@scss': resolve('src/scss')
+      '@utils': resolve('src/utils')
     }
   },
   module: {
@@ -141,12 +143,13 @@ for (var pathname in entries) {
           // more options:
           // https://github.com/kangax/html-minifier#options-quick-reference
         },
+        staticPath: config[buildConfig].staticPath,
         // necessary to consistently work with multiple chunks via CommonsChunkPlugin
         chunksSortMode: 'dependency'
     };
   
     if (pathname in webpackConfig.entry) {
-        conf.chunks = ['vendor', pathname];
+        conf.chunks = ['manifest','vendor', pathname];
         conf.hash = true;
     }
     webpackConfig.plugins.push(new HtmlWebpackPlugin(conf));

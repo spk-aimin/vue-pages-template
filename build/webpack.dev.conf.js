@@ -12,6 +12,7 @@ const portfinder = require('portfinder')
 const localInterface = require('./local_interface') //本地接口
 
 const HOST = process.env.HOST
+console.log(process.env.HOST);
 const PORT = process.env.PORT && Number(process.env.PORT)
 
 const devWebpackConfig = merge(baseWebpackConfig, {
@@ -43,6 +44,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     host: HOST || config.dev.host,
     port: PORT || config.dev.port,
     open: config.dev.autoOpenBrowser,
+    host: "0.0.0.0",
     overlay: config.dev.errorOverlay
       ? { warnings: false, errors: true }
       : false,

@@ -10,8 +10,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
-const env = require('../config/prod.env')
+console.log(process.env.NODE_ENV)
+
+const env = process.env.NODE_LINE == "line"?require('../config/prod.env') : require('../config/test.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -28,6 +31,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
@@ -103,7 +107,15 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    new ParallelUglifyPlugin({//缓存
+      cacheDir: ".cache/",
+      uglifyJS:{
+        // compress: {
+        //   warnings: false
+        // }
+      }
+    })
   ]
 })
 
