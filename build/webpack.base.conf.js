@@ -8,10 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const entries = utils.getEntries("./src/views/**/*.js")
 
 
-const buildConfig = process.env.NODE_ENV == "production"? "build": 'dev' //打包配置 dev为 "run dev"
-
-let chunks = Object.keys(entries),
-    ExtractTextPlugin = require('extract-text-webpack-plugin');    
+const buildConfig = process.env.NODE_ENV == "production"? "build": 'dev' //打包配置 dev为 "run dev"    
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -135,6 +132,8 @@ for (var pathname in entries) {
         filename: pathname + '.html',
         template: templatePath, // 模板路径
         title: templateConfig[configKey].title,
+        scripts: templateConfig[configKey].scripts,
+        styles: templateConfig[configKey].styles,
         inject: true, // js插入位置
         minify: {
           removeComments: true,

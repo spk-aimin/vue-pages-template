@@ -30,18 +30,23 @@ npm run docs
 
 ‘/build/local_interface’目录下可自定义本地接口
 
-## 页面模板配置
+## 页面模板配置
 
-> '/temlate'文件夹放置页面模板及页面模板配置
+> '/temlate'文件夹放置页面模板及页面模板配置
 
 
 * config.js 模板配置文件
 ```
 module.exports = {
-    '文件名（同viwes文件下js同名）': {
+    '文件名（同viwes文件下js同名）': {
         template: '模板文件',
         title: "页面标题"
     }
 }
 ```
-* \*\*.html 模板文件
+* **.html模板文件
+
+
+## 本地开发页面访问 
+
+[host]/views/[views文件夹下文件夹名].html
